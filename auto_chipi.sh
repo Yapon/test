@@ -4,7 +4,7 @@
 RUN_CHIP_SCRIPT="/home/user/run_chipi.sh"
 
 # Minimum power consumption threshold for running the script (in watts)
-MIN_POWER_THRESHOLD=80
+MIN_POWER_THRESHOLD=100
 
 # Function to get the current power consumption
 get_power_consumption() {

@@ -1,32 +1,26 @@
 #!/bin/bash
 
-# Path to your run_chipi.sh script
-RUN_CHIP_SCRIPT="/home/user/run_chipi.sh"
-
-# Minimum power consumption threshold for running the script (in watts)
-MIN_POWER_THRESHOLD=100
-
-# Function to get the current power consumption
-get_power_consumption() {
-    # Your code to get power consumption, for example using nvidia-smi
-    power=$(nvidia-smi --query-gpu=power.draw --format=csv,noheader,nounits)
-    echo "$power"
+# Function to get the total power consumption of all Nvidia GPUs
+get_total_power() {
+    nvidia-smi --query-gpu=power.draw --format=csv,noheader,nounits | awk '{ sum += $1 } END { print sum }'
 }
 
-# Main script loop
+# Threshold value for power consumption (in Watts) at which to execute the command
+threshold=100
+
+# Infinite loop for polling every 5 minutes
 while true; do
-    # Get current power consumption
-    power=$(get_power_consumption)
-    
-    # Compare with minimum threshold
-    if (( $(echo "$power < $MIN_POWER_THRESHOLD" | bc -l) )); then
-        echo "Power consumption is less than $MIN_POWER_THRESHOLD W. Running the script."
-        # Run the script
-        "$RUN_CHIP_SCRIPT"
+    # Check the current total power consumption of GPUs
+    total_power=$(get_total_power)
+
+    # If the consumption is below the threshold, execute the command
+    if [ $(echo "$total_power < $threshold" | bc) -eq 1 ]; then
+        echo "Total power consumption is below $threshold Watts. Executing the command."
+        cd /home/user && ./run_chipi.sh
     else
-        echo "Power consumption is equal to or greater than $MIN_POWER_THRESHOLD W. Waiting..."
+        echo "Total power consumption is $total_power Watts, which is greater than or equal to $threshold Watts."
     fi
-    
-    # Pause for 5 minutes before checking again
+
+    # Wait for 5 minutes before the next iteration
     sleep 300
 done

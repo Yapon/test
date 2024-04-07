@@ -1,13 +1,7 @@
 #!/bin/bash
 
-# Установка Git
-apt install git -y
-
 # Клонирование репозитория
 cd /home/user/ && git clone https://github.com/ChipiCoin/ChipiCoinGpuMiner.git
-
-# Установка curl
-apt install curl -y
 
 # Установка Node Version Manager (NVM)
 curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash

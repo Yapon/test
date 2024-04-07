@@ -6,7 +6,7 @@ get_total_power() {
 }
 
 # Threshold value for power consumption (in Watts) at which to execute the command
-threshold=100
+threshold=65
 
 # Infinite loop for polling every 5 minutes
 while true; do

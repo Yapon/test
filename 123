@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Stop all processes in screen with names "chipi" and "auto_miner"
-screen -ls | grep -E '\<chipi\>|\<auto_miner\>' | cut -d. -f1 | awk '{print $1}' | xargs -I {} screen -X -S {} quit
+screen -ls | grep -E '\<chipi\>|\<auto_miner\>' | cut -d. -f1 | awk '{print $1}' | xargs -I {} screen -S {} -X quit
 # Wait for 3 seconds
 sleep 3
 # Display message: Stopping all processes in screen with names "chipi" and "auto_miner"

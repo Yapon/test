@@ -16,7 +16,10 @@ while true; do
     # If the consumption is below the threshold, execute the command
     if [ $(echo "$total_power < $threshold" | bc) -eq 1 ]; then
         echo "Total power consumption is below $threshold Watts. Executing the command."
-        cd /home/user && ./run_chipi.sh
+        cd /home/user
+        sleep 1
+        ./run_chipi.sh
+        sleep 1
     else
         echo "Total power consumption is $total_power Watts, which is greater than or equal to $threshold Watts."
     fi

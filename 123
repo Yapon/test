@@ -1,7 +1,21 @@
 #!/bin/bash
 
-# Остановка всех процессов в screen с названием "chipi" и "auto_miner"
-screen -ls | grep -E '\<chipi\>|\<auto_miner\>' | cut -d. -f1 | awk '{print $1}' | xargs -I {} screen -X -S {} quit
+# Stop all processes in screen with names "chipi" and "auto_miner" and wipe them
+screen -ls | grep -E '\<chipi\>|\<auto_miner\>' | cut -d. -f1 | awk '{print $1}' | xargs -I {} screen -S {} -X quit -wipe
 
-# Переход в директорию пользователя и запуск скрипта auto_chipi.sh в новом screen-сеансе с названием "auto_miner"
-cd /home/user/ && screen -dmS auto_miner ./auto_chipi.sh
+# Wait for 3 seconds
+sleep 3
+# Display message: Stopping chipi and auto_miner processes
+echo "Stopping chipi and auto_miner processes"
+
+# Change directory to user's home and start auto_chipi.sh script in a new screen session named "auto_miner"
+cd /home/user/
+# Wait for 3 seconds
+sleep 3
+# Display message: Entering user directory and starting auto_chipi.sh
+echo "Entering user directory and starting auto_chipi.sh"
+screen -dmS auto_miner ./auto_chipi.sh
+# Wait for 3 seconds
+sleep 3
+# Display message: auto_chipi.sh started
+echo "auto_chipi.sh started"

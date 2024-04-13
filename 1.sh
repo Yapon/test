@@ -2,11 +2,15 @@
 
 # Function to stop all processes in screen sessions with names "chipi" and "auto_miner"
 stop_screen_processes() {
+    # Remove dead screens
+    screen -wipe > /dev/null 2>&1
+    
+    # Stop processes in remaining screen sessions
     screen -ls | grep -E '\<chipi\>|\<auto_miner\>' | while read -r session_info; do
         session_name=$(echo "$session_info" | awk '{print $1}')
         session_status=$(echo "$session_info" | awk '{print $3}')
         
-        if [[ $session_status == "(Dead ???" ]]; then
+        if [[ $session_status == "(Dead" ]]; then
             screen -S "$session_name" -X quit
         else
             screen -S "$session_name" -X stuff "^C"

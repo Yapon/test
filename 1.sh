@@ -6,7 +6,7 @@ stop_screen_processes() {
         session_name=$(echo "$session_info" | awk '{print $1}')
         session_status=$(echo "$session_info" | awk '{print $3}')
         
-        if [[ $session_status == "(Dead" ]]; then
+        if [[ $session_status == "(Dead ???" ]]; then
             screen -S "$session_name" -X quit
         else
             screen -S "$session_name" -X stuff "^C"

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Function to stop all processes in screen sessions with names "chipi" and "auto_miner"
+# Function to stop all processes in screen sessions with names "chipi" and  "auto_miner"
 stop_screen_processes() {
     # Stop processes in screen sessions
     screen -ls | grep -E '\<chipi\>|\<auto_miner\>' | while read -r session_info; do
